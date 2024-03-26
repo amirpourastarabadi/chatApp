@@ -1,4 +1,4 @@
-<div x-data="{type:'all',query:@entangle('query')}" class="flex flex-col transition-all h-full overflow-hidden">
+<div x-data="{type:'all'}" class="flex flex-col transition-all h-full overflow-hidden">
 
     <header class="px-3 z-10 bg-white sticky top-0 w-full py-2">
 

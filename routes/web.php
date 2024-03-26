@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Chat\Chat;
 use App\Livewire\Chat\Index;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/chats', Index::class)->name('chat.index');
+Route::get('/chats', Index::class)->name('chats.index');
+Route::get('/chats/{chat}', Chat::class)->name('chats.show');
