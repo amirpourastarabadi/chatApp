@@ -20,6 +20,104 @@
         </header>
 
         {{-- body --}}
+        <main id="conversation" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
+            <div @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>true,
+                ]) >
+
+                {{-- avatar --}}
+                <div @class([ 'shrink-0' , 'invisible'=>true,
+                    'hidden'=>false
+                    ])>
+                    <x-avatar />
+                </div>
+
+                {{-- messsage body --}}
+                <div @class([ 'flex flex-wrap text-[15px] rounded-xl p-2.5 flex flex-col text-black bg-[#f6f6f8fb]' , 'rounded-bl-none border  border-gray-200/40 '=>true,
+                    'rounded-br-none bg-blue-500/80 text-white'=>false
+                    ])>
+
+                    <p class="whitespace-normal truncate text-sm md:text-base tracking-wide lg:tracking-normal">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempore qui. Magni quia fugit voluptates, architecto perferendis, voluptatum dicta suscipit possimus repellendus ratione ab esse, quisquam veritatis reiciendis praesentium aperiam. Incidunt odit, consequatur unde facere, quas harum voluptatum quia officia perspiciatis repellendus repudiandae quisquam, nisi necessitatibus modi voluptates sapiente dignissimos?
+                    </p>
+
+                    <div class="ml-auto flex gap-2">
+                        <p @class([ 'text-xs ' , 'text-gray-500'=>true,
+                            'text-white'=>false,
+                            ]) >
+                            2:25 am
+                        </p>
+
+                        {{-- message status , only show if message belongs auth --}}
+                        <div>
+                            {{-- double ticks --}}
+                            <span @class('text-gray-200')>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">
+                                    <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z" />
+                                    <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z" />
+                                </svg>
+                            </span>
+
+                            {{-- single ticks --}}
+                            <!-- <span @class('text-gray-200')>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>false,
+                ]) >
+
+                {{-- avatar --}}
+                <div @class([ 'shrink-0' , 'invisible'=>true,
+                    'hidden'=>false
+                    ])>
+                    <x-avatar />
+                </div>
+
+                {{-- messsage body --}}
+                <div @class([ 'flex flex-wrap text-[15px] rounded-xl p-2.5 flex flex-col text-black bg-[#f6f6f8fb]' , 'rounded-bl-none border  border-gray-200/40 '=>false,
+                    'rounded-br-none bg-blue-500/80 text-white'=>true
+                    ])>
+
+                    <p class="whitespace-normal truncate text-sm md:text-base tracking-wide lg:tracking-normal">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, tempore qui. Magni quia fugit voluptates, architecto perferendis, voluptatum dicta suscipit possimus repellendus ratione ab esse, quisquam veritatis reiciendis praesentium aperiam. Incidunt odit, consequatur unde facere, quas harum voluptatum quia officia perspiciatis repellendus repudiandae quisquam, nisi necessitatibus modi voluptates sapiente dignissimos?
+                    </p>
+
+                    <div class="ml-auto flex gap-2">
+                        <p @class([ 'text-xs ' , 'text-gray-500'=>false,
+                            'text-white'=>true,
+
+                            ]) >
+                            2:25 am
+                        </p>
+
+                        {{-- message status , only show if message belongs auth --}}
+                        <div>
+                            {{-- double ticks --}}
+                            <!-- <span @class('text-gray-200')>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">
+                                    <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z" />
+                                    <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z" />
+                                </svg>
+                            </span> -->
+
+                            {{-- single ticks --}}
+                            <span @class('text-gray-200')>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
 
         {{-- send message  --}}
 
