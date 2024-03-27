@@ -18,7 +18,7 @@
                     <x-secondary-button>
                         Add Friend
                     </x-secondary-button>
-                    <x-primary-button >
+                    <x-primary-button wire:click="message({{ $user->id }})">
                         Message
                     </x-primary-button>
                 </div>

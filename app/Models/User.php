@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,5 +48,23 @@ class User extends Authenticatable
     public function conversations()
     {
         return $this->hasMany(Conversation::class, 'sender_id')->orWhere('reciver_id', $this->id);
+    }
+
+    public function findOrCreateConversationWith(int $userId): Conversation
+    {
+        $conversation = Conversation::where(fn ($q) => $q->whereSenderId($this->id)->where('reciver_id', $userId))
+                                  ->orWhere(fn ($q) => $q->whereSenderId($userId)->where('reciver_id', $this->id))
+                                  ->first();
+
+        if (is_null($conversation)) {
+            $conversation = $this->conversations()->create(['reciver_id' => $userId]);
+        }
+
+        return $conversation;
+    }
+
+    public function scopeExcept(Builder $builder, array $users): Builder
+    {
+        return $builder->whereNotIn('id', $users);
     }
 }
