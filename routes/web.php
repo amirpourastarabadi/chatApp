@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Livewire\Chat\Chat;
-use App\Livewire\Chat\Index;
+use App\Livewire\Users\Index as UserIndex;
+use App\Livewire\Chat\Index as ChatIndex;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Chat\Chat;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/chats', Index::class)->name('chats.index');
+Route::get('/chats', ChatIndex::class)->name('chats.index');
 Route::get('/chats/{chat}', Chat::class)->name('chats.show');
+
+Route::get('/users', UserIndex::class)->name('users.index');
