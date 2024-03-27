@@ -16,4 +16,19 @@ class Conversation extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function lastUnreadMessage()
+    {
+        return $this->messages()->whereNull('read_at')->where('reciver_id', $this->reciver_id)->latest('id')->limit(1);
+    }
+
+    public function reciver()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
