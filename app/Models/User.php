@@ -53,8 +53,8 @@ class User extends Authenticatable
     public function findOrCreateConversationWith(int $userId): Conversation
     {
         $conversation = Conversation::where(fn ($q) => $q->whereSenderId($this->id)->where('receiver_id', $userId))
-                                  ->orWhere(fn ($q) => $q->whereSenderId($userId)->where('receiver_id', $this->id))
-                                  ->first();
+            ->orWhere(fn ($q) => $q->whereSenderId($userId)->where('receiver_id', $this->id))
+            ->first();
 
         if (is_null($conversation)) {
             $conversation = $this->conversations()->create(['receiver_id' => $userId]);
@@ -66,5 +66,10 @@ class User extends Authenticatable
     public function scopeExcept(Builder $builder, array $users): Builder
     {
         return $builder->whereNotIn('id', $users);
+    }
+
+    public function markMessagesAsReadeFrom(Conversation $conversation): void
+    {
+        $conversation->messages()->whereNull('read_at')->where('receiver_id', $this->id)->update(['read_at' => now()]);
     }
 }
