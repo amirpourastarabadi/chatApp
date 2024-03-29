@@ -9,6 +9,7 @@ class ChatBox extends Component
     public $selectedConversation;
     public $body;
     public $loadedMessages;
+    public $lastMessage;
 
     public function loadMessages()
     {
@@ -20,7 +21,7 @@ class ChatBox extends Component
         $message = $this->selectedConversation->cereateMessage(
             body: $this->body,
             sender: auth()->id(),
-            receiver: $this->selectedConversation->receiver->id,
+            receiver: $this->selectedConversation->receiver_id,
         );
 
         $this->reset('body');

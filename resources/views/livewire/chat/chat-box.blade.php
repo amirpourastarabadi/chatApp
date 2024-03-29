@@ -1,13 +1,10 @@
-<div 
-x-data="{
+<div x-data="{
     chatElement: document.getElementById('chat'),
     height:0,
-}" 
-x-init="
+}" x-init="
     height = chatElement.scrollHeight;
     $nextTick(()=>chatElement.scrollTop = height);
-" @scroll-bottom.window="$nextTick(()=>chatElement.scrollTop = height);" 
-class="w-full overflow-hidden">
+" @scroll-bottom.window="$nextTick(()=>chatElement.scrollTop = height);" class="w-full overflow-hidden">
 
     <div class="border-b flex flex-col overflow-y-scroll grow h-full">
 
@@ -24,20 +21,25 @@ class="w-full overflow-hidden">
                 <div class="shrink-0">
                     <x-avatar class="h-9 w-9 lg:w-11 lg:h-11" />
                 </div>
-                <h6 class="font-bold truncate"> {{$selectedConversation?->receiver->name}} </h6>
+                <h6 class="font-bold truncate"> {{$selectedConversation?->receiver?->name}} </h6>
             </div>
         </header>
 
         {{-- body --}}
         <main id="chat" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
             @if($loadedMessages)
-            @foreach ($loadedMessages as $message)
-
+            @php
+            $previousMessage = null;
+            @endphp
+            @foreach ($loadedMessages as $key => $message)
+            @php
+            $previousMessage = $loadedMessages->get($key - 1);
+            @endphp
             <div @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>$message->sender_id === auth()->id(),
                 ]) >
 
                 {{-- avatar --}}
-                <div @class([ 'shrink-0' , 'invisible'=>$message->sender_id !== auth()->id(),
+                <div @class([ 'shrink-0' , 'invisible'=>$previousMessage?->sender_id !== auth()->id(),
                     'hidden'=>$message->sender_id === auth()->id()
                     ])>
                     <x-avatar />
