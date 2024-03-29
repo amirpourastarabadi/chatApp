@@ -1,4 +1,13 @@
-<div x-data="{type:'all'}" class="flex flex-col transition-all h-full overflow-hidden">
+<div x-data="{type:'all', chat:'{{$chat}}'}" x-init="    
+            setTimeout(()=>{
+                conversationElement = document.getElementById('conversation-'+chat);
+                //scroll to the element
+                if(conversationElement)
+                {
+                    conversationElement.scrollIntoView({'behavior':'smooth'});
+                }
+                },200);
+    " class="flex flex-col transition-all h-full overflow-hidden">
 
     <header class="px-3 z-10 bg-white sticky top-0 w-full py-2">
 
@@ -41,7 +50,7 @@
             @if ($conversations)
 
             @foreach ($conversations as $conversation)
-            <li id="conversation-1" class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700/70 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2 {{$conversation->id == $selectedConversation->id ? 'bg-gray-400/70' : ''}}">
+            <li id="conversation-{{ $conversation->id }}" wire:key="{{ $conversation->id }}" class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700/70 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2 {{$conversation->id == $selectedConversation->id ? 'bg-gray-400/70' : ''}}">
                 <a href="{{route('chats.show', ['chat' => $conversation->id])}}" class="shrink-0">
                     <x-avatar src="https://source.unsplash.com/500x500?face-{{$conversation->reciver->id}}" />
                 </a>
