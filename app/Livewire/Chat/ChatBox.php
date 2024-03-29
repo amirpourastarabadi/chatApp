@@ -23,7 +23,8 @@ class ChatBox extends Component
             receiver: $this->selectedConversation->receiver->id,
         );
 
-        $this->body = '';
+        $this->reset('body');
+        $this->dispatch('scroll-bottom');
 
         $this->loadedMessages->push($message);
     }

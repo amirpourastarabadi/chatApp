@@ -1,4 +1,13 @@
-<div class="w-full overflow-hidden">
+<div 
+x-data="{
+    chatElement: document.getElementById('chat'),
+    height:0,
+}" 
+x-init="
+    height = chatElement.scrollHeight;
+    $nextTick(()=>chatElement.scrollTop = height);
+" @scroll-bottom.window="$nextTick(()=>chatElement.scrollTop = height);" 
+class="w-full overflow-hidden">
 
     <div class="border-b flex flex-col overflow-y-scroll grow h-full">
 
@@ -20,7 +29,7 @@
         </header>
 
         {{-- body --}}
-        <main id="conversation" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
+        <main id="chat" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
             @if($loadedMessages)
             @foreach ($loadedMessages as $message)
 
