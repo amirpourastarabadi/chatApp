@@ -28,6 +28,7 @@ class ChatBox extends Component
         $this->dispatch('scroll-bottom');
 
         $this->loadedMessages->push($message);
+        $this->dispatch('chat.chat-list', 'refresh');
     }
 
     public function mount()

@@ -19,7 +19,12 @@ class Conversation extends Model
 
     public function lastUnreadMessage()
     {
-        return $this->messages()->whereNull('read_at')->where('receiver_id', $this->receiver_id)->latest('id')->limit(1);
+        return $this->messages()->whereNull('read_at')->where('sender_id', $this->receiver_id)->latest('id')->limit(1);
+    }
+
+    public function unReadMessages()
+    {
+        return $this->messages()->whereNull('read_at')->where('sender_id', auth()->id());
     }
 
     public function receiver()

@@ -80,12 +80,14 @@
                                 </svg>
                             </span>
                             <p class="grow truncate text-sm font-[100]">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores qui est saepe repudiandae reiciendis, soluta atque fuga sapiente mollitia quasi.
+                                {{ $conversation?->messages?->last()?->body ?? '' }}
                             </p>
                             {{-- unread count --}}
+                            @if($conversation?->unReadMessages()->count())
                             <span class="font-bold p-px px-2 text-xs shrink-0 rounded-full bg-blue-500 text-white">
-                                2
+                                {{ $conversation?->unReadMessages()->count() }}
                             </span>
+                            @endif
                         </div>
                     </a>
                     {{-- Dropdown --}}
