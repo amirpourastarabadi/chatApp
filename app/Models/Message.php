@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,8 @@ class Message extends Model
         'body',
     ];
 
+    public $appends = ['sent_at'];
+
     public $dates = ['read_at', 'receiver_deleted_at', 'sender_deleted_at'];
 
     public function conversation()
@@ -29,5 +32,10 @@ class Message extends Model
     public function isRead()
     {
         return !is_null($this->read_at);
+    }
+
+    public function sentAt(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->created_at->format('g:i a'));
     }
 }

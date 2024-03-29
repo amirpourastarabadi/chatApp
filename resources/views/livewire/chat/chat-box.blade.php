@@ -47,7 +47,7 @@
                         <p @class([ 'text-xs ' , 'text-gray-500'=>$message->sender_id !== auth()->id(),
                             'text-white'=>$message->sender_id === auth()->id(),
                             ]) >
-                            2:25 am
+                            {{ $message->sent_at }}
                         </p>
 
                         {{-- message status , only show if message belongs auth --}}
