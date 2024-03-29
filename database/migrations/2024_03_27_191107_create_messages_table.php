@@ -16,15 +16,15 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Conversation::class);
 
-            $table->unsignedBigInteger('reciver_id');
-            $table->foreign('reciver_id')->references('id')->on('users');
+            $table->unsignedBigInteger('receiver_id');
+            $table->foreign('receiver_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('sender_id');
             $table->foreign('sender_id')->references('id')->on('users');
 
             $table->timestamp('read_at')->nullable();
 
-            $table->softDeletes('reciver_deleted_at');
+            $table->softDeletes('receiver_deleted_at');
             $table->softDeletes('sender_deleted_at');
 
             $table->text('body')->nullable()->fulltext('message_body_full_text_index');

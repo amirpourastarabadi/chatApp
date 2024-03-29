@@ -11,15 +11,15 @@ class Message extends Model
 
     protected $fillable = [
         'conversation_id',
-        'reciver_id',
+        'receiver_id',
         'sender_id',
         'read_at',
-        'reciver_deleted_at',
+        'receiver_deleted_at',
         'sender_deleted_at',
         'body',
     ];
 
-    public $dates = ['read_at', 'reciver_deleted_at', 'sender_deleted_at'];
+    public $dates = ['read_at', 'receiver_deleted_at', 'sender_deleted_at'];
 
     public function conversation()
     {
@@ -28,6 +28,6 @@ class Message extends Model
 
     public function isRead()
     {
-        return is_null($this->read_at);
+        return !is_null($this->read_at);
     }
 }

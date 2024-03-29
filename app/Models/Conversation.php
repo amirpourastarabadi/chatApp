@@ -10,7 +10,7 @@ class Conversation extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['reciver_id', 'sender_id'];
+    protected $fillable = ['receiver_id', 'sender_id'];
 
     public function messages()
     {
@@ -19,16 +19,30 @@ class Conversation extends Model
 
     public function lastUnreadMessage()
     {
-        return $this->messages()->whereNull('read_at')->where('reciver_id', $this->reciver_id)->latest('id')->limit(1);
+        return $this->messages()->whereNull('read_at')->where('receiver_id', $this->receiver_id)->latest('id')->limit(1);
     }
 
-    public function reciver()
+    public function receiver()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)
+            ->whereIn('id', [$this->sender_id, $this->receiver_id])
+            ->where('id', '!=', auth()->id());
     }
 
     public function sender()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)
+            ->whereIn('id', [$this->sender_id, $this->receiver_id])
+            ->where('id', auth()->id());
+    }
+
+    public function cereateMessage(string $body, int $sender, int $receiver): Message
+    {
+        return Message::create([
+            'conversation_id' => $this->getkey(),
+            'body' => $body,
+            'sender_id' => $sender,
+            'receiver_id' => $receiver,
+        ]);
     }
 }

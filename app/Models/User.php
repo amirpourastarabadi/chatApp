@@ -47,17 +47,17 @@ class User extends Authenticatable
 
     public function conversations()
     {
-        return $this->hasMany(Conversation::class, 'sender_id')->orWhere('reciver_id', $this->id);
+        return $this->hasMany(Conversation::class, 'sender_id')->orWhere('receiver_id', $this->id);
     }
 
     public function findOrCreateConversationWith(int $userId): Conversation
     {
-        $conversation = Conversation::where(fn ($q) => $q->whereSenderId($this->id)->where('reciver_id', $userId))
-                                  ->orWhere(fn ($q) => $q->whereSenderId($userId)->where('reciver_id', $this->id))
+        $conversation = Conversation::where(fn ($q) => $q->whereSenderId($this->id)->where('receiver_id', $userId))
+                                  ->orWhere(fn ($q) => $q->whereSenderId($userId)->where('receiver_id', $this->id))
                                   ->first();
 
         if (is_null($conversation)) {
-            $conversation = $this->conversations()->create(['reciver_id' => $userId]);
+            $conversation = $this->conversations()->create(['receiver_id' => $userId]);
         }
 
         return $conversation;

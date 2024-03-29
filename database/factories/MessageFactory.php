@@ -20,7 +20,7 @@ class MessageFactory extends Factory
     {
         return [
             'conversation_id' => Conversation::factory(),
-            'reciver_id' => User::factory(),
+            'receiver_id' => User::factory(),
             'sender_id' => User::factory(),
             'read_at' => null,
             'body' => fake()->paragraph(random_int(1, 3)),
@@ -31,7 +31,7 @@ class MessageFactory extends Factory
     {
         return $this->state([
             'conversation_id' => $conversation->getKey(),
-            'reciver_id' => $conversation->reciver_id,
+            'receiver_id' => $conversation->receiver_id,
             'sender_id' => $conversation->sender_id,
         ]);
     }
