@@ -28,10 +28,13 @@
         {{-- body --}}
         <main @scroll="
             scrollPosition = $el.scrollTop;
-            console.log(scrollPosition);
             if(scrollPosition <= 0){
-                Livewire.dispatch('nextPage')
+                $dispatch('nextPage')
             }
+        " @kkkkkkk.window="
+        newScrollPosition = $el.scrollHeight + 50; //TODO: in first round without 50 work bad
+        $el.scrollTop = newScrollPosition - height;
+        height = newScrollPosition;
         " id="chat" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
             @if($loadedMessages)
             @php
