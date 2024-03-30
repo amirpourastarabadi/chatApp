@@ -9,11 +9,27 @@ class ChatBox extends Component
     public $selectedConversation;
     public $body;
     public $loadedMessages;
-    public $lastMessage;
+    public $paginatVariable = 10;
+    public $perPage = 10;
+
+    protected $listeners = [
+        'nextPage',
+    ];
+
+    public function nextPage()
+    {
+        $this->paginatVariable += $this->perPage;
+        $this->loadMessages();
+    }
 
     public function loadMessages()
     {
-        $this->loadedMessages = $this->selectedConversation->messages;
+        $total = $this->selectedConversation->messages()->count();
+        $this->loadedMessages = $this->selectedConversation
+            ->messages()
+            ->skip($total - $this->paginatVariable)
+            ->take($this->paginatVariable)
+            ->get();
     }
 
     public function sendMessage()

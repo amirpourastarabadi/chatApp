@@ -26,7 +26,13 @@
         </header>
 
         {{-- body --}}
-        <main id="chat" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
+        <main @scroll="
+            scrollPosition = $el.scrollTop;
+            console.log(scrollPosition);
+            if(scrollPosition <= 0){
+                Livewire.dispatch('nextPage')
+            }
+        " id="chat" class="flex flex-col gap-3 p-2.5 overflow-y-auto  flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
             @if($loadedMessages)
             @php
             $previousMessage = null;
