@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Chat;
 
+use App\Models\Message;
+use App\Notifications\MessageSent;
 use Livewire\Component;
 
 class ChatBox extends Component
@@ -15,6 +17,27 @@ class ChatBox extends Component
     protected $listeners = [
         'nextPage',
     ];
+
+    public function getListeners(): array
+    {
+        $authUser = auth()->id();
+        return [
+            'nextPage',
+            "echo-private:users.{$authUser},.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated" => 'broadcastNotifications',
+        ];
+    }
+
+    public function broadcastNotifications($event)
+    {
+        if ($event['type'] === MessageSent::class) {
+            if ($this->selectedConversation->id == $event['conversation_id']) {
+                $commingMessage = Message::findOrFail($event['message_id']);
+                $this->dispatch('scroll-bottom');
+                $this->loadedMessages->push($commingMessage);
+                $this->dispatch('chat.chat-list', 'refresh');
+            }
+        }
+    }
 
     public function nextPage()
     {
@@ -43,13 +66,15 @@ class ChatBox extends Component
 
         $this->reset('body');
         $this->dispatch('scroll-bottom');
-
         $this->loadedMessages->push($message);
         $this->dispatch('chat.chat-list', 'refresh');
+
+        $this->selectedConversation->receiver()->notify(new MessageSent($message));
     }
 
     public function mount()
     {
+        dump($this->selectedConversation->receiver()->id);
         $this->loadMessages();
     }
 

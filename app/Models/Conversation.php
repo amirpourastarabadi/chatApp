@@ -34,16 +34,14 @@ class Conversation extends Model
 
     public function receiver()
     {
-        return $this->belongsTo(User::class)
-            ->whereIn('id', [$this->sender_id, $this->receiver_id])
-            ->where('id', '!=', auth()->id());
+        return User::whereIn('id', [$this->sender_id, $this->receiver_id])
+            ->where('id', '!=', auth()->id())->first();
     }
 
     public function sender()
     {
-        return $this->belongsTo(User::class)
-            ->whereIn('id', [$this->sender_id, $this->receiver_id])
-            ->where('id', auth()->id());
+        return User::whereIn('id', [$this->sender_id, $this->receiver_id])
+            ->where('id', auth()->id())->first();
     }
 
     public function cereateMessage(string $body, int $sender, int $receiver): Message

@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         $conversation->messages()->whereNull('read_at')->where('receiver_id', $this->id)->update(['read_at' => now()]);
     }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'users.' . $this->getKey();
+    }
 }
