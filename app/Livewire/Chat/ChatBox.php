@@ -74,7 +74,6 @@ class ChatBox extends Component
 
     public function mount()
     {
-        dump($this->selectedConversation->receiver()->id);
         $this->loadMessages();
     }
 
