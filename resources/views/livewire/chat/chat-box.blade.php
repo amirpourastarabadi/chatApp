@@ -2,7 +2,7 @@
     chatElement: document.getElementById('chat'),
     height:0,
 }" x-init="
-    height = chatElement.scrollHeight;
+    height = chatElement.scrollHeight
     $nextTick(()=>chatElement.scrollTop = height);
 " @scroll-bottom.window="$nextTick(()=>chatElement.scrollTop = height);" class="w-full overflow-hidden">
 
@@ -31,7 +31,7 @@
             if(scrollPosition <= 0){
                 $dispatch('nextPage')
             }
-        " @kkkkkkk.window="
+        " @next-page-event.window="
         newScrollPosition = $el.scrollHeight + 50; //TODO: in first round without 50 work bad
         $el.scrollTop = newScrollPosition - height;
         height = newScrollPosition;
@@ -44,7 +44,7 @@
             @php
             $previousMessage = $loadedMessages->get($key - 1);
             @endphp
-            <div @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>$message->sender_id === auth()->id(),
+            <div wire:key="{{ time().$key }}" @class([ 'max-w-[85%] md:max-w-[78%] flex w-auto gap-2 relative mt-2' , 'ml-auto'=>$message->sender_id === auth()->id(),
                 ]) >
 
                 {{-- avatar --}}

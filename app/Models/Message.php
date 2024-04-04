@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\MessageObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
- 
+
 #[ObservedBy([MessageObserver::class])]
 class Message extends Model
 {
@@ -40,5 +40,13 @@ class Message extends Model
     public function sentAt(): Attribute
     {
         return Attribute::make(get: fn () => $this->created_at->format('g:i a'));
+    }
+
+    public function body(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => decrypt($value),
+            set: fn (string $value) => encrypt($value)
+        );
     }
 }

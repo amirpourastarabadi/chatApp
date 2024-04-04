@@ -43,7 +43,7 @@ class ChatBox extends Component
     {
         $this->paginatVariable += $this->perPage;
         $this->loadMessages();
-        $this->dispatch('kkkkkkk');
+        $this->dispatch('next-page-event');
     }
 
     public function loadMessages()
